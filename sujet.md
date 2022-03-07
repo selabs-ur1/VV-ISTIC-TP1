@@ -11,3 +11,30 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1. [Eve Online's boot.ini deletion bug](https://www.kotaku.com.au/2007/12/eve_online_windows_xp_boot_bug/). 
+After a patch was released, users found their computer's boot.ini file deleted. 
+The game used a file also named boot.ini and the bug came from the path used to delete the file. 
+During the installation, the file was deleted due to a faulty use of the specifications of the method. 
+This bug is local as it impacts the client, and not every client were impacted as some configurations of Windows were 
+capable of restoring the file. The most impacted clients would find themselves not able to boot their computer after the update.
+In the [post](https://www.eveonline.com/news/view/about-the-boot.ini-issue) where they addressed the issue, 
+they also mentioned the fact that they did not check that this behaviour did not happen and that they should have but 
+did not because of time limitations while yes it should have been considering it is a critical Windows file.
+
+2. The bug [278](https://issues.apache.org/jira/browse/COLLECTIONS-278) is about the put() and putAll() methods that do 
+not update the contents if an internal attributs, resulting in a different returned value when accessed. 
+This is a local bug and was solved and tests added.
+
+3. Netflix injects failures, shutdowns servers, and checks that the systems degrades gracefully.
+The technique of Chaos Engineering is aso used by Amazon, Google, Microsoft, and Facebook.
+They monitor the number of streams started per seconds to have an evaluation of the health of their systems.
+Same could be applied to web services by monitoring the number of requests per seconds, or the response time.
+
+4. Using formal specification, it allows the verification of the language to be much smaller 
+(they took the example of JVM Bytecode taking 150 pages, while WebAssembly fits in one).
+Because a language is formalized does not mean the code should not be tested. 
+For example is important to make sure that your code does what you want and only what you want. 
+
+5. Using their interpreter allows to prove the code with reduction relation, which in turns allows to prove the specification
+and have an optimised interpreter, that avoids performances pitfalls.
