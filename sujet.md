@@ -1,5 +1,9 @@
 # Practical Session #1: Introduction
 
+## Binôme
+* Clément BRIAND
+* Jules DURAND
+
 1. Find in news sources a general public article reporting the discovery of a software bug. Describe the bug. If possible, say whether the bug is local or global and describe the failure that manifested its presence. Explain the repercussions of the bug for clients/consumers and the company or entity behind the faulty program. Speculate whether, in your opinion, testing the right scenario would have helped to discover the fault.
 
 2. Apache Commons projects are known for the quality of their code and development practices. They use dedicated issue tracking systems to discuss and follow the evolution of bugs and new features. The following link https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-794?filter=doneissues points to the issues considered as solved for the Apache Commons Collections project. Among those issues find one that corresponds to a bug that has been solved. Classify the bug as local or global. Explain the bug and the solution. Did the contributors of the project add new tests to ensure that the bug is detected if it reappears in the future?
@@ -11,3 +15,20 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1. Nous pouvons citer le bug de Tesla survenu en novembre 2021.
+   [lien de l'article](https://www.presse-citron.net/a-cause-dun-bug-tesla-rappelle-11-000-vehicules/). Suite à une mise à jour du Full Self Driving (FSD) le pilote automatique des véhicules Tesla, des communications entre deux puces seraient coupées. Cela entrainerait la détection d'objets à vitesse négative. Pensant que cet objet pourrait rentrer en collision avec le véhicule le logiciel active le freinage d'urgence. 
+   Comme le problème vient d'une erreur de communication entre deux puces, le problème est global. Dès que le bug a été trouvé, le déploiement de la mise à jour a été arrêté et deux jours le bug a été réglé.
+
+2. En accèdant au tableau Jira, nous pouvons filtrer les bugs connus de la fondation apache, en filtrant les bugs résolus nous pouvons trouver ce [bug](https://issues.apache.org/jira/browse/SLING-11164?filter=-7&jql=issuetype%20%3D%20Bug%20AND%20resolved%20%3E%3D%20-1w%20order%20by%20updated%20DESC) local. Un nouveau cas de test a bien été ajouté à la base de code pour détecter une possible régression dans le futur. 
+
+3. Netflix, pour tester la résistance aux pannes de ses services utilise l'ingénierie du chaos. Cela consiste à simuler des pannes, de plus en plus importantes sur la production. Parmi les pannes reproductibles nous pouvons citer la création de délai entre la requête et le service, la mise en échec d'une requête, l'extinction du service ou d'une machine virtuelle.
+Les chaos Kong, sont l'extinction de régions completes sur leur hébergeur. Par exemple l'ensemble des serveurs européens peuvent être coupés, ceci est censé entrainer une montée en charge des serveurs des autres zones géographiques. Ces tests ne sont conduits que sur les horaires de travail des équipes Netflix afin de remettre le système en fonctionnement en cas de problème sur le test.
+Les équipes de tests regardent le SPS (Stream Per Second), cette variable correspond au nombre de vidéos démarées par seconde. Les résultats de l'expérience permettent de soit : gagner en confiance avec les capacités du système à garder le comportement attendu ou bien à détecter un nouveau bug sur lequel il faudra enquêter. 
+Les autres entreprises utilisant l'ingénierie du chaos sont Facebook, Amazon, Google et microsoft. 
+
+4. Avoir une spécification formelle permet d'alléger la spécification. Les implémentations WebAssembly doivent quand même être testés, ne serait ce que pour ajouter une sécurité en plus pour l'application.
+
+5. Les principaux avantages de la spécification mecanisée sont la construction de preuves via un interpréteur et un vérificateur. 
+
+Cela ne permet pas d'améliorer la spécification d'origine mais apporte de nouvelles fonctionnalités comme un vérifieur de types ou un interpréteur d'executable vérifié.
