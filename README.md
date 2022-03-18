@@ -1,4 +1,5 @@
-# Validation and Verification: Practical Session #1
+# Yao Arnaud Akoto et Corentin Baland
+## Validation and Verification: Practical Session #1
 
 This practical session will help to better understand validation and verification in practice, while being exposed to scientific materials.
 

@@ -11,3 +11,36 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+
+1.
+Source : https://www.theregister.com/2015/01/17/scary_code_of_the_week_steam_cleans_linux_pcs/
+En 2015 un bug de l'application Steam de Valve sur Linux pouvait supprimmer tous les fichiers de l'ordinateur.
+Les repercussions vers l'utilisateur sont trés grande (perte de documents).
+La cause de l'erreur vient de  :
+```
+STEAMROOT="$(cd "${0%/*}" && echo $PWD)"
+
+
+rm -rf "$STEAMROOT/"*
+```
+
+Il aurait fallu mieux encadrer la valeur STEAMROOT car si elle est vide rm -rf est lancé à la racine de l'ordinateur.
+Un simple test aurait pu alerter sur la dangerosité d'une telle commande.
+
+
+2.  Bug :
+https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-775?filter=doneissues
+
+Le bug a l'air local, il venait d'une erreur de compréhension de l'Iterateur de Collection de JAVA
+
+Dans les commentaires nous pouvons voir qu'un nouveau test à été mis en place pour repérer cette erreur.
+
+
+3. Le papier présente le Chaos Engineering, le but est de stopper des instances de machines virtuelles contenant des services grâce à des Chaos Monkeys et de montrer la fiabilité de l'infrastructure même en cas de pannes. Pour ces expérimentations il faut une infrastructure solide et une automatisation des pannes et des transferts de charges.
+Ce principe peut être interessant dans plusieurs domaines, nottament dans le cas d'un groupe d'ordinateurs d'un véhicule si un appareil vient à s'interrompre il pourrait être remplacé par d'autres le temps qu'un arrêt sécurisé ou une réparation est faite.
+
+
+4.  La spécification formelle permet de simplifier l'utilisation d'un outils mais il faut tout de même tester et vérifier sa bonne utilisation/implémentation.
+
+5.  la spécification mécanisée permet la construction de preuves pour tester le bon fonctionnement de l'outil.
