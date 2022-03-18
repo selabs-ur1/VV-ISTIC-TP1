@@ -1,4 +1,4 @@
-# Practical Session #1: Introduction
+# Practical Session 1: Introduction
 
 1. Find in news sources a general public article reporting the discovery of a software bug. Describe the bug. If possible, say whether the bug is local or global and describe the failure that manifested its presence. Explain the repercussions of the bug for clients/consumers and the company or entity behind the faulty program. Speculate whether, in your opinion, testing the right scenario would have helped to discover the fault.
 
@@ -11,3 +11,26 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### 1.
+Le 23 octobre 2021, Tesla a proposé une mise à jour pour avoir une "Conduite entièrement autonome" aux utilisateurs volontaires. Cependant, cette mise à jour comportait un bug, celui-ci insérait un problème de communication entre deux modules de la voiture. Le module de détecteur de collision frontale et le frein d'urgence. Les deux modules ne communiquaient plus ensemble ce qui pouvait entraîner une voiture qui freinait sans aucune raison. Cela aurait pu entraîner des collisions avec les voitures qui suivent les Tesla endommagées. Pour l'entreprise Tesla, le bug aurait pu amener à rembourser les dégâts endommagés et amener un manque de confiance envers la marque. Cependant, aucun dégât n'a été répertorié. Notre bug est global, car il venait d'un problème de communication entre deux modules.   
+
+### 2.
+We chose this [resolved bug](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-799?filter=doneissues).  The author of the ticket states that an UnmodifiableNavigableSet (which is not supposed to be modifiable) can actually be changed via the methods pollFirst() and pollLast() which returns respectively the first and last element of the set and removes them. UnmodifiableNavigableSet inherits those methods from its supertype NavigableSet. This is a local bug because it can be tracked and fixed in the code and does not come from the interaction between modules. The solution is to simply override the functions in the UnmodifiableNavigableSet to throw UnsupportedOperationException. The contributors did add [tests to prevent those from happening in the future](https://github.com/apache/commons-collections/pull/250/commits/241ca64b5f469cc0e4c629a411c7b52128c2acb9)
+
+### 3.
+Netflix utilise le chaos engineering et plus précisement le chaos monkey pour tester leurs codes. Ils vont dans un premier temps définir un context de tests, avec ce qu'ils vont tester, et deux groupes d'utilisateurs, ceux avec un bug et ceux sans. Ensuite ils vont analysées l'impact du bug en comparant les streams par secondes (SPS) des deux groupes. Si un écarts important est détécté cela signifie que le bug n'est pas correctement gérer et qu'il produit une frustation trop important sur l'utlisateur donc il faut le corriger ou rediriger vers une solution moins génante. Amazon, Google, Microsoft, et Facebook utilise aussi le chaos engineering pour tester leurs applications. 
+
+### 4. 
+The main benefits of WebAssembly having a formal specification are :
+   - "a clean design" : by specifying its architecture through formal semantics, it allows for more structured expectations of what the code needs to do and how it needs to be performing
+   - Consistent performances : Unlike its Javascript counterPart, WebAssembly's behavior is much more predictable
+   - Fast performances : Low level code can use the full performance of a machine
+   - Portability : WebAssembly is hardware- and platform-independent which means it can be deployed across all platforms.
+   - Compactness : the fact that it's written in Binary makes it so that it weights way less than JavaScript code which is very useful when sending it over the internet.
+Of course specifying a language in a formal way does not prevent it from having bugs, so testing is still the thing to do here.
+
+### 5.
+The mechanized specification of WebAssembly contains extended features and behaviour, improving it. During the process of proving WebAssembly's properties, several errors where found in the original specification, proving the efficiency of the mechanizing process.
+To prove webassembly's specification properties, Lemmas were introduced. The lemma is a generalised version of a property that is required to prove the progress property.
+Those lemmas were proven using an executable interpreter augmented with a reference parser and linker
