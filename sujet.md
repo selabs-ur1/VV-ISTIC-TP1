@@ -11,3 +11,88 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+
+https://www.reuters.com/business/autos-transportation/tesla-recalling-nearly-12000-us-vehicles-over-software-communication-error-2021-11-02/
+
+1. In the article the bug is caused by a malfunction of two onboard chips that are disconnected by the software. This issue leads to the faulty detection of negative velocity object that prompted the car to stop. This bug is local and leads to the car stopping in the middle of the road by activating the automatic emergency braking system. This bug affects all the beta user of the Full Self Driving program released by tesla, all kinds of models were affected from model S to Model 3. Tesla had to recall nearly 12 000 vehicules to downgrade their FSD program to the previous version, no accidents were reported related to the issue according to Tesla. The user had to bring their car back to the dealership for a software downgrade.In our opinion with the right scenario they could have simulated the issue and avoid this issue.
+
+
+https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-796?filter=doneissues
+
+2. SetUniqueList.createSetBasedOnList doesn't add list elements to return value
+This bug is local because it involves a human error, a person deleted a line of code that was necessary for the function to work. The function SetUniqueLis.createSetBasedOnList return only null value, the function doesn't add any elements to the set. The solution was to put the deleted line back into the code for the function to work. The contributors also fixed a typo in the code and created a test to ensure that the bug would be detected if it reappears in the future. You can see the new test [here](https://github.com/apache/commons-collections/pull/255/commits/7a62f14b3a8d8b02d84fca41b19b4b202ebd82a0)
+
+3. 
+Experiments 
+
+They use a service called Chaos Monkey, which is only active during normal working hours so that the engineers can respond quickly to any incident.
+The purpose of this service is to "randomly selects virtual machine instances that host our production services and terminates them". This service can simulate from cutting some servor or some error in injection from other services to an entire server region shutdown.
+
+The usual structure of an experiment : 
+
+1. Start by defining ‘steady state’ as some measurable output of a system that indicates normal behavior.
+2. Hypothesize that this steady state will continue in both the control group and the experimental group.
+3. Introduce variables that reflect real world events like servers that crash, hard drives that malfunction, network connections that are severed.
+4. Try to disprove the hypothesis by looking for a difference in steady state between the control group and the experimental group.
+"
+
+Requirements
+
+Chaos engeneering requires to specify : 
+* hypotheses
+* independant variables
+* dependant variables
+* context
+
+Variables observed
+
+They observed if the users are able to find some content to watch and successfully watch it.
+They created a metric called SPS for streams starts per second. This indicator is the primary data reflecting the general health of the system. They also observe request latency or CPU load. 
+
+Results
+
+The result they obtain is a drop in the SPS in case of a problem or a normal beahvior of the SPS during the course of a day if the change didn't affect the system negatively. If they observe an unexpected change in SPS outside of the normal fluctuation range they know there is a problem.
+
+
+Netflix is not the only compagny to use the chaos engineering : Amazon, Google, Facebook, Microsoft use a similar strategy.
+
+We could take the exemple of Wikipedia. We could experiment crashing the server and observe the number of research made during the experiments.
+
+4.
+The main advantages of having a formal specifications for Web Assembly is that the final code is : 
+* Fast : By low leveled code web assembly optimized ahead of time. Native machine code can utilize the full performance of the machine
+* Efficient : By using formal semantics the languge is optimized in a way that will allow it to be compact and easyly transimitted through the web media.
+* Portable : As Web spans throught a variety of OS and devices this language allows to code application in a platform-independant and hadware-independant way, so that the application will run on all browsers and hadware with the same behavior.
+*  Secured : Web assembly use linear memory to store information, this memory is disjointed from the code space. The compiled code cannot corrupt his own environment. That means that even corrupted code can be executed without concern as the program will only mess up is own memory space 
+*  Easy to Debug : Even if the final code is in low level assembly code, you can obtain a text version of it to debug which allows developper to understant it more easily
+*  Runs on modern browser : as WebAssembly is the result of the cooperation of the biggest leadres on the browser market it can run flawlessy on each of them thus avoiding one the biggest issue of the current most used web language : JavaScript
+*  Easy to understand : WebAssembly allox the use of previous Web-unsupported language such as C C++ and the code is then compiled in WebAssembly, so developper can stick to preexisting and wishfully mastered languages
+
+In your opinion, does this mean that WebAssembly implementations should not be tested? 
+Even with those safety measures in place, I think that any code should be tested before a proper deployement. The safety measures of WebAssembly garantee a fast validation process helping in code trust process.
+
+5.  
+* According to the author of this second paper, what are the main advantages of the mechanized specification? 
+Soundness
+```
+This paper, and
+the official specification, both state that the WebAssembly type system enjoys several soundness properties
+```
+* Did it help improving the original formal specification of the language?
+
+It does not improve it but add new features such as a verified executable interpreter and a type checker 
+
+* What other artifacts were derived from this mechanized specification?
+
+type checker & type interpreter
+```
+We have also defined a separate verified executable interpreter (§6) and type checker (§5). Like many verified language implementations, these artefacts require integration
+with an external parser and linker to run as standalone programs, which introduces an untrusted interface.
+```
+
+How did the author verify the specification? 
+
+
+
+Does this new specification removes the need for testing?
