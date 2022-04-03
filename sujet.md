@@ -11,3 +11,39 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1. A
+
+
+2. Apache bug
+
+Here is the link to the corrected bug we have chosen : [AbstractLinkedMap firstKey/lastKey JavaDoc reversed](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-353?filter=allissues)
+
+The bug comes from the javaDoc of two methods of the `AbstractLinkedMap` class:
+- .firstKey()
+- .lastKey()
+
+Indeed, when executing a test, the expected result corresponding to the doc fails.
+```java
+LinkedMap map = new LinkedMap();
+map.put("one", "one");
+map.put("two", "two");
+assertEquals("one", map.lastKey());
+assertEquals("two", map.firstKey());
+```
+
+The two javadocs are reversed, this bug is `local` because it does not come from the interaction of elements between them but from a local error during the implementation of the two methods. It is probably due to a copy/paste error.
+
+This bug has been reported by several people in different reports, it is difficult to say if a test has been added to avoid regression. (any bug found must be tested to avoid regression and reappearance of the error).
+
+The solution is rather simple: 
+- reverse the names of the two JavaDocs methods so that their behaviour matches their JavaDocs.
+
+3. C
+
+
+4. D
+
+
+
+
