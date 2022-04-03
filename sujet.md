@@ -12,8 +12,22 @@
 
 ## Answers
 
-1. A
+1. Well known bug - Patriot missile: error 404, scud not found, 28 dead
 
+An Iraqi Scud strikes the Dhahran barracks in Saudi Arabia, killing 28 soldiers of the US Army's 14th Quartermaster Detachment.
+
+The attack should have been intercepted by the radar system of the Patriot missiles in use.
+But a software bug in the system's handling of time stamps got in the way.
+
+As a result, the system scanned the wrong part of the sky and found no target.
+If there was no target, the initial detection was assumed to be a false trail and the missile was removed from the system.
+
+The Patriot missile battery had been in service for 100 hours, during which time the system's internal clock had drifted by a third of a second.
+Due to the speed of the missile, this was equivalent to a missing distance of 600 metres.
+
+It represent a `global` bug because it's due to a malfunction of the coordination of different elements in the system.
+
+As we know some values can not be represented in binary form. To ensure our system does not make approximations on a long time period we should have tested it by simulating the long time use of the system.
 
 2. Apache bug
 
