@@ -29,6 +29,8 @@ It represent a `global` bug because it's due to a malfunction of the coordinatio
 
 As we know some values can not be represented in binary form. To ensure our system does not make approximations on a long time period we should have tested it by simulating the long time use of the system.
 
+---
+
 2. Apache bug
 
 Here is the link to the corrected bug we have chosen : [AbstractLinkedMap firstKey/lastKey JavaDoc reversed](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-353?filter=allissues)
@@ -53,10 +55,58 @@ This bug has been reported by several people in different reports, it is difficu
 The solution is rather simple: 
 - reverse the names of the two JavaDocs methods so that their behaviour matches their JavaDocs.
 
-3. C
+---
 
+3. Netflix Chaos Engineering
 
-4. D
+Chaos engineering is popularized by Netflix with its Simian Army. The main concept is to perform a controlled experiment in production to study how the entire system behaves under unexpected conditions. For example, in Netflix, they would simulate random server shutdowns to see how the system responds to this phenomenon. This is a form of testing in production. Main challenges are to design the experiments in a way that the system does not actually fail and to pick the system properties to observe. In the case of Netflix, they want to preserve the availability of the content even when the quality has to be reduced.
+
+It is known that the SNCF team is very well known in this field when it comes to simulating route changes. These techniques can be used by companies that develop software where the environment is very difficult to simulate and where the consequences of a drop in performance have very few serious consequences.
+
+---
+
+4. Bringing the Web up to Speed with WebAssembly
+
+**Formal specification**
+> This approach tries to guarantee the absence of bugs by construction. It involves the manual or automatic formal proof of all the components of the system, and their final integration. It is usually based on logical modeling and reasoning and it is used on specific parts of critical software.
+
+In this paper they describe the advantages of this specification as :
+- Safe, fast, and portable semantics:
+  - safe to execute
+  - fast to execute
+  - language-, hardware-, and platform-independent
+  - deterministic and easy to reason about
+  - simple interoperability with the Web platform
+- Safe and efficient representation:
+  - compact and easy to decode
+  - easy to validate and compile
+  - easy to generate for producers
+  - streamable and parallelizable
+
+Constructive approach involves formal modeling is one of the three main general approaches to construct reliable software:
+- It guarantees the reliability and correctness by construction.
+
+**The main problem with formal proofs comes from the `assumptions` they make to abstract the real world.**
+So it'll always be interresting to try catching those bugs with analytical analyse.
+
+---
+
+5. Mechanising and Verifying the WebAssembly Specification
+
+According to the author of this second paper, what are the main advantages of the mechanized specification? 
+- They can now guarantee, through their proofs, that the type system is sound in a way that would not be possible for a “light-weight" specification. They also discovered some issues during it's implementation.
+
+Did it help improving the original formal specification of the language?
+- Yes, they detail how our work on this proof has exposed several issues with the official WebAssembly specification, influencing its development.
+
+What other artifacts were derived from this mechanized specification? 
+- Thanks to this they can offer a verified executable interpreter and type checker, which the paper-based formalisation did not.
+
+How did the author verify the specification? Does this new specification removes the need for testing?
+- They successfully passes all core language conformance tests available in the WebAssembly repository, the also conducted differential testing
+of our executable interpreter against several major WebAssembly engines.
+- No it doesn't mean that no failures could happen.
+
 
 
 
