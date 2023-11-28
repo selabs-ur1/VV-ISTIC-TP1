@@ -37,3 +37,16 @@ I do not known whether or not this bug could have been discovered through what w
 ### Question 2
 
 [Bug](https://issues.apache.org/jira/browse/MAPREDUCE-4549?filter=12323705): After merging a feature preventing duplicate job configuration in Hadoop Map/Reduce, backwards compatibility with Map/Reduce 1.0 was broken with distributed cache entries. This bug can be considered local has it pertains to a simple mistake within the Hadoop 2.0.2-alpha codebase. It was fixed by swapping the thrown exception with a simple message warning users that duplicated cache conflicts will eventually be considered an error. In that case, no tests were modified or implemented.
+
+## Question 3
+
+Concretely, a chaos engineering exercise requires defining an experiment:
+
+ - Start by defining 'steady state', e.g. the output of a normally behaving system.
+ - Hypothesize that this steady stage will continue in both the control group and the experimental group.
+ - Introduce variables simulating real world events: Server crashes, hard drive failures, severed network connections, etc.
+ - Try to find differences between the control group and the experimental group, potentially disproving the hypothesis.
+ 
+The paper describes such an experiment where they test a bookmarking service, in order to verify that its failure would not have a significant impact on streaming. They would mess with the bookmarking service and check whether the SPS (*streaming* starts per second) metrics would get impacted.
+ 
+At the conclusion of the experiment, confidence in the system is either increased, or a weakness has been uncovered and suggests a path for improvement. Voyages-sncf.com is another example of a web service having conducted an [experiment in chaos engineering](https://fr.slideshare.net/devopsrex/days-of-chaos-le-dveloppement-de-la-culture-devops-chez-voyagessncfcom-laide-de-la-gamification-80396202). Other services like Reddit would certainly benefit from chaos engineering. It could be interesting to check engagement rates if the upvote service got down. Maybe users would comment less, or would actually read more comments instead of just scrolling through the most upvoted ones.
