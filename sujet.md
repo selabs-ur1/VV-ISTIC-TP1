@@ -11,3 +11,56 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### 1 - Adrenalin 23.2.1 WHQL Driver
+
+Un bug sur le driver de certaines carte graphiques AMD pouvait provoqué le crash de windows.
+Lors de l'installation du driver, les utilisateurs peuvent sélectionner l'option "Factory reset", qui nécessite le redémarrage du pc pour finaliser l'installation. 
+Ce redémarrage, si réalisé alors que Windows réalise de son côté des mises à jour en arrière plan, pouvait résulter en des fichiers systèmes windows corrompus chez certains utilisateurs.
+
+Le bug est provoqué par l'arrêt forcé de windows pendant l'écriture sur des fichiers système.
+
+Ce bug a eu comme répercussion, pour certaines personnes, la perte de données sur leur machine
+
+On a dans ce cas un bug global.
+
+Il a fallut aux ingénieurs d'AMD plusieurs essais avant de réussir à reproduire le bug, qu'ils qualifient comme très rare.
+
+sources : 
+* https://technewsspace.com/amd-confirms-its-graphics-driver-can-permanently-crash-windows-but-no-solution-yet/
+* https://www.pcworld.com/article/1529986/rare-amd-radeon-driver-bug-corrupt-windows-fix.html
+
+### 2 - COLLECTIONS-796 : SetUniqueList.createSetBasedOnList doesn't add list elements to return value
+
+Ce bug est local.
+
+D'après la documentation, SetUniqueList.createSetBasedOnList retourne les éléments de la liste, alors qu'il le faisait dans la version précédente.
+L'erreur vient d'une ligne de code contenant "addAll" supprimée par inadvertance.
+Elle a été corrigé en la rajoutant, et des tests ont été ajoutés pour s'assurer que la fonction retourne bien les éléments de la liste.
+
+### 3 - Netflix : Chaos Engineering
+
+Dans ce papier on peut retrouvé différentes expériences menées par Netflix pour tester ses systèmes.
+
+On retrouve par exemple Chaos Kong, qui va simuler la défaillance d'une région entière d'Amazon EC2, ainsi que le Failure Injection Testing (FIT), qui va provoquer des échecs de requêtes entre les services Netflix.
+
+L'une des exigences pour ces tests est qu'ils ne doivent être actif uniquement pendant les heures normales de travail (pour obtenir une réponse rapide des ingénieurs).
+
+La variable principale observé pendant ces expérimentation est le SPS ((stream)Starts Per Second) qui correspond aux nombres de flux par seconde.
+
+Netflix obtient grâce à ça des services plus stable, et des ingénieurs qui conçoivent leurs services pour gérer les défaillances d'instances.
+
+Elle n'est pas la seule entreprise à utiliser ce type de tests, des entreprises comme Amazon, Google, Microsoft et Facebook le font également.
+
+### 4 - WebAssembly
+
+Les principaux avantages d'une spécification formelle pour WebAssembly sont :
+
+* une spécification claire, ce qui permet une meilleure compréhension du fonctionnement de WA.
+* la cohérence entre les différentes implémentations
+* l'interopérabilité entre les implémentations
+* la stabilité et fiabilité de la technologie
+
+Ça ne rend pour autant pas les tests négligeables. Ceux-ci permettent d'identifier d'éventuels bug et ce qui va permettre de fiabilisé le système.
+
+### 5 - Spécification mécanisée
