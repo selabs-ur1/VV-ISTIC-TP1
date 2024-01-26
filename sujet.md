@@ -11,3 +11,20 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+1. I found a bug on Tiktok app that append in July 2021. TikTok users have been re-encountering a strange bug that resets their follower count all the way back down to zero. It seems like it's a local bug, there is no inpact on others components and it don't affect the global structure of the software. The bug appears when the follower count falls to 0. There was global panic among application users and numerous complaints about Tiktok.
+Link to the [article](https://www.dexerto.com/entertainment/tiktok-0-followers-glitch-fix-for-account-bug-as-profiles-show-no-followers-1566312/).
+
+2. Link to the [bug](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-799?filter=doneissues). The bug i a local bug but with major consequencies. Functions pollFirst() and pollLast() are successfully executed and do not throw an UnsupportedOperationException on an UnmodifiableNavigableSet instance. It was detected during testing with assertj. No others tests was implemented (unspecified).
+
+3. They experimented with these bugs:
+   - terminate virtual machine instances
+   - inject latency into requests between services
+   - fail requests between services
+   - fail an internal service
+   - make an entire Amazon region unavailable
+They observed some metric and essentialy the stream starts per second (SPS) metric. They define somes equirements for experiments like clear definition of steady state (measurable), precise assumptions about system behavior in control and experimental groups, appropriate selection of variables reflecting real events. As result, they obtain some data and variations on metrics. Netflix isn't the only compagny that experiments chaos engineering, Amazon, Google, Microsoft and Facebook do it too. As Netflix, it's possible to implement chaos engineering in organizations. We can inject latences in internal network, shuting down some serveurs (if their is multiple of them),etc. Before doing this, it's essential to defined the expected behavior and expected results.
+
+4. The main advantages of having a formal specification for WebAssembly are Safety, Fast low-level code, portability, compact code. The specification is important but that doesn't mean we don't need to test it. Even if it's great explaned, some tests have to be implemented.
+
+5. 
+ 
