@@ -11,3 +11,42 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### Question 1
+
+[Article](https://www.theregister.com/2023/11/27/openzfs_2_2_0_data_corruption/): A data-destroying bug has been discovered following the release of OpenZFS 2.2.0. It appears to be caused by a new feature (Block cloning) exacerbating a previously unknown underlying bug. This [bug](https://github.com/openzfs/zfs/issues/15526#issuecomment-1825181463) apparently existed as far back as 2013, but it did not seem to manifest itself in production. Still, in conjunction with Block Cloning, whole blocks get overwritten by zeroes.
+
+[Bronek Kozicki](https://github.com/Bronek) explains the conditions necessary for this bug to manifest in a [GitHub Issue comment](https://github.com/openzfs/zfs/issues/15526#issuecomment-1826412289):
+
+> You need to understand the mechanism that causes corruption. It might have been there for decade and only caused issues in a very specific scenarios, which do not normally happen. Unless you can match your backup mechanism to the conditions described below, you are very unlikely to have been affected by it.
+
+> 1. a file is being written to (typically it would be asynchronously – meaning the write is not completed at the time when writing process "thinks" it is)
+
+> 2. at the same time when ZFS is still writing the data, the modified part of file is being read from. The same time means "hit a very specific time", measured in microseconds (that's millionth of a second), wide window. Admittedly, as a non-developer for ZFS project, I do not know if using HDD as opposed to SSD would extend that time frame.
+
+> 3. if it is being read at this very specific moment, the reader will see zeros where the data being written is actually something else
+
+> 4. if the reader then stores the incorrectly read zeroes somewhere else, that's where the data is being corrupted
+
+Worse still, OpenZFS' own volume integrity checking tooling does not report anything wrong whenever data gets corrupted.
+
+We consider this bug to be local, as it hinges on the existence of a previously unknown issue deep in the code base. The immediate consequences for the developers was embarrassment over the perceived loss in confidence from their users. Distributions shipping OpenZFS 2.2.0 will have to update to OpenZFS 2.2.1 as soon as possible. As for the users, it seems like very few actually lost data in this whole ordeal. A fix for the underlying bug is in the works and should be available for OpenZFS 2.2.2.
+
+I do not known whether or not this bug could have been discovered through what would have been considered *reasonable* testing, as it seems to be quite mystical. However, new features such as block cloning should always be tested in scenarios as close to production as possible before shipping. File systems are critical systems in any circumstances and should absolutely be subjected to the most severe testing routines before updates.
+
+### Question 2
+
+[Bug](https://issues.apache.org/jira/browse/MAPREDUCE-4549?filter=12323705): After merging a feature preventing duplicate job configuration in Hadoop Map/Reduce, backwards compatibility with Map/Reduce 1.0 was broken with distributed cache entries. This bug can be considered local has it pertains to a simple mistake within the Hadoop 2.0.2-alpha codebase. It was fixed by swapping the thrown exception with a simple message warning users that duplicated cache conflicts will eventually be considered an error. In that case, no tests were modified or implemented.
+
+## Question 3
+
+Concretely, a chaos engineering exercise requires defining an experiment:
+
+ - Start by defining 'steady state', e.g. the output of a normally behaving system.
+ - Hypothesize that this steady stage will continue in both the control group and the experimental group.
+ - Introduce variables simulating real world events: Server crashes, hard drive failures, severed network connections, etc.
+ - Try to find differences between the control group and the experimental group, potentially disproving the hypothesis.
+ 
+The paper describes such an experiment where they test a bookmarking service, in order to verify that its failure would not have a significant impact on streaming. They would mess with the bookmarking service and check whether the SPS (*streaming* starts per second) metrics would get impacted.
+ 
+At the conclusion of the experiment, confidence in the system is either increased, or a weakness has been uncovered and suggests a path for improvement. Voyages-sncf.com is another example of a web service having conducted an [experiment in chaos engineering](https://fr.slideshare.net/devopsrex/days-of-chaos-le-dveloppement-de-la-culture-devops-chez-voyagessncfcom-laide-de-la-gamification-80396202). Other services like Reddit would certainly benefit from chaos engineering. It could be interesting to check engagement rates if the upvote service got down. Maybe users would comment less, or would actually read more comments instead of just scrolling through the most upvoted ones.
