@@ -22,3 +22,16 @@ Il s’agissait d’un bug de concurrence global qui affectait toutes les unité
    C'est un bug local. Le code possède des additions à 0 et des multiplications à 0. Ce sont des opérations inutiles pouvant être simplifiées. 
 
    Les développeurs n'ont pas ajoutés de tests, il s'agit d'une suppression de code redondant. Les tests de non-regression doivent encore passer pour valider le changement.
+
+3) Netflix possède plusieurs expériences pour tester la robustesse de leurs systèmes. Le Chaos Monkey consiste à simuler des pannes individuelles à l'aide de machines virtuelles. Le Chaos Kong consiste à simuler des pannes groupées en rendant une région entierement indisponible. Netflix utilise aussi l'injection de pannes comme des échecs de communications, requêtes, etc.
+
+Ces tests ont pour objectif d'améliorer le service client ou de détecter des failles. Afin d'y arriver, ils enticipent les résultats de ces tests. 
+
+Pour vérifier que le système fonctionne bien, Netflix utlise la métric SPS (Starts per second) qui analyse l'impact sur les utilisateurs en mesurant la disponibilité du contenu.
+
+Les résultats sont un système robuste aux pannes, des failles détectées en amont ou une confiance accrue dans le système courant.
+
+Netflix a mis en avant une méthode de tests à grande échelle et d'autres les ont pris comme exemple, LinkedIn ou les GAFAM par exemple. Discord pourrait utilisé cette technique afin de se rendre compte l'impact des problèmes serveurs qu'ils peuvent rencontrer. Identifier les causes des problèmes et rendre leur système plus fiable afin de contenter les utilisateurs.
+
+4) 
+
