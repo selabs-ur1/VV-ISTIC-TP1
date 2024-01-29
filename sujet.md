@@ -11,3 +11,43 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### Question 1
+
+**Pentium Division Bug:**
+
+**Description:** The Pentium Division Bug was a precision issue in the floating-point unit of the Intel Pentium processor, specifically the original Pentium (P5) launched in 1993. Discovered in 1994, it impacted the processor's ability to perform division accurately beyond the ninth decimal place.
+
+**Scope:** Local, because it's an error about division
+
+**Manifestation:** While calculation errors were rare, researchers and users highlighted inconsistencies in division results under specific conditions.
+
+**Repercussions:** The extent of the problem was debated, as errors were unlikely in typical use cases. However, Intel's initial response downplayed the issue, leading to controversy. Eventually, Intel initiated a processor replacement program under public pressure.
+
+This incident underscored the importance of transparency and communication regarding software and hardware defects, prompting companies to adopt more open policies concerning product issues. It also had significant implications for quality management and testing procedures in the semiconductor industry.
+
+### Question 2
+
+https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-814?filter=doneissues
+
+Dans cette issue, on retrouve un problème d'appel de fonction avec de mauvais paramètres, qui ne lève pas d'exception de pointeur nul alors qu'elle doit en lever une. 
+Pour le corriger, le développeur a rajouté deux conditions de vérifications que les deux paramètres ne soit pas nuls, et a rajouté un test unitaire pour vérifier que l'exception est bien levée.
+
+### Question 3
+
+Concrete experiments :
+- Chaos Monkey : Randomly selects servers and shuts them down during business hours so that engineers can test their ability to detect and respond to failures.
+- Chaos Kong : simulate the failure of an entire AWS region and verify that services are resilient to region failures.
+- Failure Injection Testing : injects faults into a system to test the system's ability to handle them. 
+
+The requirements are that they have to test during production because they can't fully reproduce all the system. They need to put real-worlds events in their tests. They automate the tests to be able to run them continuously.
+
+Engineers observe SPS (Starts Per Second) and if there is an unexpected drop, they know that there is a problem.
+
+
+Other big companies that use Chaos Engineering are Amazon, Google, Facebook and Microsoft.
+
+
+### Question 4
+
+The main advantages of having a formal specification for WebAssembly are safety, sast low-level code, portability and compact code. Despite the fact that WebAssembly is a low-level language, it is still a programming language and it is important to have a formal specification to avoid bugs and to be able to test it. 
