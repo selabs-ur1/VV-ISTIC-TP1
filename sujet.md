@@ -18,4 +18,7 @@
 Il s’agissait d’un bug de concurrence global qui affectait toutes les unités Therac-25.
 
 2) Source : https://github.com/apache/commons-imaging/pull/136/commits/d65ec98d3db20da2ea48a87b88c684d377988541
+
    C'est un bug local. Le code possède des additions à 0 et des multiplications à 0. Ce sont des opérations inutiles pouvant être simplifiées. 
+
+   Les développeurs n'ont pas ajoutés de tests, il s'agit d'une suppression de code redondant. Les tests de non-regression doivent encore passer pour valider le changement.
