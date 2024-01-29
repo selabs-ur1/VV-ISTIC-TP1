@@ -11,3 +11,15 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+Authors: Dufeil Jaufret & Gentile Brian
+
+1. Security flaw in Log4j. Hackers could run malicious code by forcing Log4j to store a log entry with a specific string. It is a global bug. Log4j is a open source logging software so used by a lot of people, some people even said that this vulnerability poses a "severe risk" to the Internet. Apache gave a critical ranking to the bug and rushed a solution
+
+2. Bug Issue 796. Functions re-implemented, typo fixed. The contributors did add new tests.
+
+3. They do experiments like injecting latency into requests or fail requests between services or making a whole region unavailable. This requires fallbacks to ensure that non-critical failures have a minimal impact on the user and how he uses the service. They monitor the metric they call SPS (starts per second) which tells there is a problem if it fluctuate in a unexpected manner. They also monitor new account signups per second. Depending on the experiments, they can either have more confident in the service or finding weakness and try to fix it. It is not well publicized but it must be useful and used by other company.
+Services like Spotify, Facebook and monitor the active users the moment we implement experiments.
+
+4.  optimization (compile time, cache, ...), portable on multiple architectures, secure thanks to linear memory which is disjoint from execution stack, overall deterministic reducing the likelihood of making bugs. The formal specification doesn't exclude the presence of bugs so we still need to test.
+
+5. More determinism, more reduction rules. It did improve the specification. They tested, with 2 tools, by converting C tests into WebAssembly. They still found a crash bug so testing is still necessary.
