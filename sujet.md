@@ -33,5 +33,12 @@ Les résultats sont un système robuste aux pannes, des failles détectées en a
 
 Netflix a mis en avant une méthode de tests à grande échelle et d'autres les ont pris comme exemple, LinkedIn ou les GAFAM par exemple. Discord pourrait utilisé cette technique afin de se rendre compte l'impact des problèmes serveurs qu'ils peuvent rencontrer. Identifier les causes des problèmes et rendre leur système plus fiable afin de contenter les utilisateurs.
 
-4) 
+4) Les spécifications formelles de WebAssembly permettent de correctement délimités l'impact du système, de rapidement valider le code. Cela permet aussi de faciliter l'intégration de nouveaux contenus avec des indications.
 
+Nous pensons que des tests sont nécessaire pour combler toutes potentielles failles. De plus, grace aux spécifications formelles, il est facile de mettre en place des scénarios efficaces.
+
+5) Les avantages principaux sont : une correspondance des spécifications formelles et des spécifications mécanisée, la possibilité de faire une verification et une analyse formelle.
+
+Il contient un verificateur de type permettant de controller tout problème. Il permet de détecter des erreurs de spécifications.
+
+Les tests restent nécessaire pour combler les lacunes et les potentielles failles.
