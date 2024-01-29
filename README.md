@@ -1,4 +1,4 @@
-# Validation and Verification: Practical Session #1
+# Validation and Verification: Practical Session #1 - Issa Hassan Fadoul & Maxime Le Gal
 
 This practical session will help to better understand validation and verification in practice, while being exposed to scientific materials.
 
