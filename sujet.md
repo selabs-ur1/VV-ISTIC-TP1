@@ -11,3 +11,11 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1) Source : https://www.nytimes.com/1986/06/21/us/fatal-radiation-dose-in-therapy-attributed-to-computer-mistake.html
+   Le bug dans le logiciel Therac-25 était lié à l'administration du dosage de radiothérapie contrôlée par logiciel de l'appareil. L'appareil avait deux modes de fonctionnement : un mode faible puissance pour la thérapie par faisceaux d'électrons et un mode haute puissance pour la thérapie par rayons X. En raison d'une condition de concurrence critique dans le logiciel, la transition entre ces modes pourrait être déclenchée de manière incorrecte, ce qui amènerait la machine à délivrer un rayonnement d'une intensité beaucoup plus élevée que prévu, ce qui pourrait potentiellement tuer des personnes.
+
+Il s’agissait d’un bug de concurrence global qui affectait toutes les unités Therac-25.
+
+2) Source : https://github.com/apache/commons-imaging/pull/136/commits/d65ec98d3db20da2ea48a87b88c684d377988541
+   C'est un bug local. Le code possède des additions à 0 et des multiplications à 0. Ce sont des opérations inutiles pouvant être simplifiées. 
