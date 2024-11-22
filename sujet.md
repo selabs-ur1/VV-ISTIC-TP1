@@ -11,3 +11,28 @@
 5. Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: <https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf>. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1. The *Vmin Shift Instability* (too-high voltage issue) causes Intel's newest chips to be permanently damaged overtime.
+
+    The *Vmin Shift Instability* issue is local to 13th and 14th Gen “Raptor Lake” Intel's chips.
+    Appearing in February 2024, gamers playing games with *DirectX12* started to experience frequent crashes
+
+    this bug was confusing due to the wrong error message affirming that the GPU (Nvidia GeForce Graphics drivers) was in fault: *VRAM errors*.
+
+    > Users are also receiving misleading error messages about running out of video driver memory, despite having sufficient memory.
+
+    But NVidia denied in April 2024 and game developers, [from Alderon games](https://alderongames.com/intel-crashes), Fortnite, Warframe (blame on Raptor Lake), started to monitor what causes could lead to this problem.
+    It causes 100% failure rate in certain contexts, for all end customers (game users, game servers and developers).
+
+    The first fix was to underclock these CPUs at the lower voltage, resulting in an estimated 9% performance loss.
+
+    from [Intel's public blog post](https://community.intel.com/t5/Blogs/Tech-Innovation/Client/Intel-Core-13th-and-14th-Gen-Desktop-Instability-Root-Cause/post/1633239):
+
+    > **Vmin Shift Instability Root Cause**
+    >
+    > Intel® has localized the *Vmin Shift Instability* issue to a clock tree circuit within the IA core which is particularly vulnerable to reliability aging under elevated voltage and temperature. Intel has observed these conditions can lead to a duty cycle shift of the clocks and observed system instability.
+
+    This bug caused Intel to recall and refund all faulty chips.
+
+    This is not a software bug, but with sufficient system testing (stress test) it could have been discovered.
+    Unfortunately the problem is appearing after months of usage, so in practice we can't test this much without having any idea of what we're testing.
