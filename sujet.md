@@ -90,3 +90,14 @@
     As the system must be always up.
     The real case of backing up data/transferring load is already happening in production.
     They already have sustained methods to apply their update, their new data center installation, etc.
+
+4. Without reading the paper, we can easily claim that we ***have*** to test any implementations. The fact that the specification is formal is only a springboard to complete testing.
+
+    As WebAssembly have to code for Javascript, we have to create our own constraint and rule (inexistent in JS).
+
+    Having a formal specification, allow us to take into consideration efficiency and security. And avoid redundant code or overdesigned code that could be too much and lead to less compact code (essential to reduce load times, save potentially expensive bandwidth, and improve overall responsiveness).
+
+    One of the other advantages is to maintain coherency across the code base and allow everyone to contribute universally while following the guidelines.
+
+    Testing is mandatory for such sensitive system. As it will be deployed on every devices, for every users.
+    The implementation must be fast and 'leakless'.
