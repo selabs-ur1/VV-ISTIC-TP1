@@ -11,3 +11,22 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1 - **Ghostscript Vulnerability (CVE-2024-29510)**  : this vulnerability exist in how Ghostscript handles EPS (Encapsulated PostScript) 
+   ==> considered **global** because it affects a widely used software tool present in diverse systems worldwide
+   ==> The bug came to light because Ghostscript failed to properly handle specially crafted EPS files 
+   ++ for clients/users :
+   ==> Loss of Trust : the users might lose their trust if their data is compromised.
+   ==> Data Breaches : the Attacker could steal or access confidential information like medical records etc ..
+   ++ for the company:
+   ==> Reputation Damage
+   ==> Financial Costs
+   And For me Yes, testing the right scenario could have likely helped discover the Ghostscript bug earlier because The bug is related to how Ghostscript processes EPS files, a format that can include complex instructions. Testing scenarios that deliberately use malformed or malicious EPS files could reveal vulnerabilities in command execution or memory management.
+
+2 - 
+
+3 - 
+
+4 - 
+
+5 -
