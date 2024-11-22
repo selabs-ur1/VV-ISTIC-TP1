@@ -11,3 +11,34 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### Question 1
+
+On peut retrouver parmi les plus beaux bugs celui de Microsoft en 2024 avec la mise à jour effectué par CrowdStrike. Ce bug a fait planter 8.5 millions d'ordinateurs et serveurs utilisant l'os Microsoft Windows. C'était donc un bug global qui a eu de gros impacts sur plusieurs structures notamment aéroport centre commercial etc.
+Le bug était selon certains experts simplement le mauvais fichier de définition qui était récupéré à cause d'un problème de version. Ce qui entraînait le plantage logiciel et du noyau avec lui et provoqué l'écran bleu. (source : https://fr.wikipedia.org/wiki/Panne_informatique_mondiale_de_juillet_2024)
+
+### Question 2 
+
+(https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-521?filter=doneissues)
+Et un bug local simple de condition qui provoquait un NullPointeurException, l'erreur est simplement dû à une oublie de modification suite sûrement à un copier coller de la ligne du dessus avec key1. Le test à null n'est pas effectué sur key2. L'auteur montre à avoir testé et il est dit que l'erreur a été corrigée. Normalement le test à du lui aussi être mis en place, mais ne trouvant pas la version exacte avec la modification, je n'ai pas la certitude que le test a été ajouté. Mais l'auteur initial à partager le résultat de son test. 
+
+### Question 3
+
+On retrouve 3 expériences menées : Chaos Monkey, Chaos Kong, et Failure Injection Testing (FIT). Chaos Monkey arrête des machines virtuelles en production pour voir si les services peuvent fonctionner même en cas de problèmes sur une VM. Chaos Kong simule la panne d'une région entière, donc un continent, pour vérifier la résilience face à une perte aussi conséquente. FIT simule des mises en échec de requêtes pour vérifier que le système se dégrade de manière contrôlée.
+Les exigences pour mener ces expériences sont de ne pas être capable de reproduire un système parallèle à la production, car il serait trop complexe et irréaliste, et donc de devoir tester seulement en production. Il faut pouvoir automatiser ces tests pour les exécuter de nouveau. De plus, il est nécessaire de contrôler les groupes d'utilisateurs impactés par ces expériences pour limiter les risques.
+Parmi les variables observées, on retrouve Steady-State Behavior : Netflix mesure le comportement stable du système en vérifiant le nombre de démarrages de flux vidéo par seconde. On retrouve aussi d'autres métriques fines, comme la latence des requêtes ou l'utilisation CPU, pour détecter des signes de fonctionnement en mode dégradé.
+Parmi les résultats principaux, on observe un changement dans la conception des services pour tolérer des défaillances d'instances individuelles. Un autre résultat montre que, malgré la dégradation ou l'échec de certains services, cela n'affecte pas de manière significative les utilisateurs. En effectuant de manière régulière ces expériences, Netflix a pu renforcer la résilience de ses services et améliorer les solutions de secours en cas de panne.
+Netflix n'est pas la seule entreprise à faire de l'ingénierie du chaos ; on retrouve également Amazon, Google, Microsoft, et Facebook.
+Pour d'autres organisations, on peut mettre en place des expériences similaires à celles menées par Netflix en simulant des pannes de services ou des pannes de serveur. Mais aussi en simulant des perturbations réseau ou des incohérences dans les données pour surveiller la résilience du système face à ces erreurs, et mettre les concepteurs dans une optique de prévoir davantage d'erreurs extérieures à leurs conceptions.
+
+
+### Question 4
+
+Les avantages d'une spécification formelle pour WebAssembly sont de garantir la sécurité du code exécuté en assurant l'absence de comportements indéfinis tels que des accès mémoire non autorisés ou des erreurs de type. Une meilleure portabilité, car cela garantit un comportement déterministe et cohérent sur toutes les plateformes et tous les navigateurs sans ambiguïté. Une validation efficace, grâce à la sémantique formelle, cela est plus simple et plus rapide. Enfin, cela permet une optimisation, car les moteurs de JavaScript peuvent traduire le code directement en une représentation intermédiaire pour des optimisations ultérieures. Malgré cela, les implémentations doivent être testées, car la spécification formelle garantit la validité du modèle théorique du langage. Cela ne garantit en aucun cas l'absence d'erreurs lors de la mise en pratique.
+
+## Question 5
+
+Les avantages de la spécification mécanisée permettent d'éviter les erreurs humaines présentes dans les spécifications informelles en papier. Elle permet de prouver formellement des propriétés importantes, telles que la solidité du système de types. Il est possible de créer un interpréteur exécutable vérifié, qui peut être utilisé pour valider la spécification à l’aide de tests de conformité.
+La spécification mécanisée a contribué à améliorer la spécification formelle originale en identifiant plusieurs erreurs dans la spécification officielle, qui ont ensuite été corrigées par les auteurs de la spécification. L'auteur a découvert des problèmes liés à la propagation des exceptions et à l'opération de retour.
+D'autres artefacts ont été dérivés de cette spécification mécanisée, comme un interpréteur exécutable vérifié et un vérificateur de types exécutable. L'auteur a vérifié la spécification en utilisant des preuves mécanisées dans Isabelle pour prouver les propriétés de solidité du système de types. Il a ensuite validé à l'aide de la suite de tests de conformité, ainsi que par des tests différentiels contre d'autres implémentations de WebAssembly.
+Malgré cette nouvelle spécification, les tests restent nécessaires et importants. La spécification formelle garantit que le modèle du langage est correct, mais les implémentations peuvent toujours contenir des erreurs.
