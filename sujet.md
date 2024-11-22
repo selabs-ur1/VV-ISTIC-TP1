@@ -11,3 +11,19 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1. I've chosen the 19 of July 2024 [CrowdStrike BsoD outage](https://www.wikiwand.com/en/articles/2024_CrowdStrike-related_IT_outages). CrowdStrike is a cybersecurity company that distributes software for windows. On this day they pushed an patch containing a corrupted file, which, because the software was critical for security, caused every single computer running it to imediately update and enter a blue screen which could not be recovered from without manual intervention. It is a local bug. The consequence of this bug is a casual 10 billion USD of financial damage. Crowdstrike themselves released a document listing what went wrong in their testing for this to happen, and the main thing was that the unit testing was going only through a happy path. That and the absence of a staggered rollout of the updates led to this massive outage. 
+2. I've chosen [this issue](https://issues.apache.org/jira/browse/KAFKA-18063). Kafka keeps a list of refrence to some type objects. This caused, java being java, those objects to never be garbage collected when droped from their scope, effectively leading to a memory leak. The solution is to keep *weak* pointers, which do not prevent the object from being garbage collected. Tests where added to check for it.
+3. They randomly kill production servers or an entire region to ensure it doesn't break everything. They also sometimes increase latency or even prevent communication between internal services. 
+
+\include $(Principles of Chaos Engineering)
+They use stream starts per second as a metric (SPS)
+
+"[They] also noticed that organizations such as Amazon [3], Google [3], Microsoft [4], and Facebook [5], were applying similar techniques to test the resilience of their own systems."
+
+The main points of Chaos Engineering compared to other forms of testing is that:
+- it shows issues that would only appear in production, mainly because of scale. In that sense, it would be possible to replicate a environement with the same number of consumer operation/second and obtain the same result without risking actual consumer discontent, but
+- it also put pressure on devs, because they know that their program **Will** suffer catastrophic failure in prod, and that they **Need** to handle it.
+
+4. The advantage of having a formal specification is that "it leads to a notably clean design". The semantics is simpler. That is the only advantage. Other defining elements of Wasm, like safety, portability and "deterministicness" as opposed to js are not the result of having a formal specification. They maybe were implemented *into* the specs, or *thanks to* the specs, but thats pretty much it. And of course, Wasm implementations should be tested, but having a clean and conscise formal specification makes this process way simpler.
+5. A mechanised proof can be mathematical demonstrated. Because of this the author caught a few errors in the original specification, which were fixed. This paper also resulted in a verified implementations of a type checker and interpreter. This still does not remove the need for testing implementations of the spec, as implementation may implement it incorrectly.
