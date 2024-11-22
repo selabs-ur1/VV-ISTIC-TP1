@@ -91,7 +91,7 @@
     The real case of backing up data/transferring load is already happening in production.
     They already have sustained methods to apply their update, their new data center installation, etc.
 
-4. Without reading the paper, we can easily claim that we ***have*** to test any implementations. The fact that the specification is formal is only a springboard to complete testing.
+4. Without reading the paper, we can easily claim that we ***have*** to test any implementation. The fact that the specification is formal is only a springboard to complete testing.
 
     As WebAssembly have to code for Javascript, we have to create our own constraint and rule (inexistent in JS).
 
@@ -101,3 +101,14 @@
 
     Testing is mandatory for such sensitive system. As it will be deployed on every devices, for every users.
     The implementation must be fast and 'leakless'.
+
+5. A model checker, as Isabelle, ensures that certain properties (`theorem`s) is true across the code base; They are mathematically demonstrated.
+
+    [The mechanized specification](https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf) helped improve the original formal specification of the language.
+    > this proof has exposed several issues with the official WebAssembly specification
+
+    It also derived proofs of soundness.
+
+    The author verified the specification and provided verified implementations of a type checker and interpreter.
+
+    Any implementation can introduce bugs, independently of the specification.
