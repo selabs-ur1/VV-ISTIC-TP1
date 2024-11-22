@@ -23,7 +23,11 @@
    ==> Financial Costs
    And For me Yes, testing the right scenario could have likely helped discover the Ghostscript bug earlier because The bug is related to how Ghostscript processes EPS files, a format that can include complex instructions. Testing scenarios that deliberately use malformed or malicious EPS files could reveal vulnerabilities in command execution or memory management.
 
-2 - 
+2 - collection 813 : https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-813?filter=doneissues&orderby=cf%5B12314125%5D+ASC%2C+updated+DESC
+    ==> The bug was identified in the method CollectionUtils.retainAll(), which is used to retain the elements of one collection that are also present in another collection, with an optional Equator for comparing elements. The issue was that the method did not throw a NullPointerException (NPE) when any of its parameters were null
+    ==> This bug can be classified as local, as it only affects the behavior of a specific utility method .
+    ==> Solution :  a null check was added for the Equator parameter using Objects.requireNonNull(). This ensures that if the Equator is null, the method immediately throws a NullPointerException
+    ==> Yes, the contributors added tests to verify that the retainAll() method now correctly throws an NPE when null is passed as the Equator. The test case provided in the issue demonstrates the scenario where a null Equator is passed and confirms that the NPE is now correctly thrown, making sure that this bug will not reappear in future versions.
 
 3 - 
 
