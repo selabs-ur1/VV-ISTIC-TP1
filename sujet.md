@@ -49,3 +49,44 @@
 
     The contributors fixed the test and added a new one for `ORDERED` maps like `LinkedHashMap`.
     As it was a fix on only method test, an anti-regression test is not necessary.
+
+3. [Chaos Engineering](https://arxiv.org/ftp/arxiv/papers/1702/1702.05843.pdf)
+
+    > Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in its capability to withstand turbulent conditions in production.
+
+    To evaluate their system, Netflix uses some key scenarios:
+
+    - terminate virtual machine instances
+    - inject latency into requests between services
+    - fail requests between services
+    - fail an internal service
+    - make an entire Amazon region unavailable
+  
+    However, the chaos aspect is essential, the events must be unpredictable.
+    This is why, they launch this kind of 'tests' in production.
+    They ensure that the system is powerful enough by running experiments continuously.
+
+    Some concrete experiments consist to overloaded/stress server.
+
+    Some other solutions to unwanted events, reside in the preservation of the main feature (provide a video player) over small QoL, controlled by other micro-services (bookmark service (`where were you in the film?`), catalogue, etc.).
+
+    There are some requirements for these experiments.
+    - First start by defining 'steady state', a case-control to represent the normal behavior.
+    - Claim that this steady state will continue in both the control and experimental group.
+    - Introduce the bad events
+    - Analyze the difference in steady state between the control and the experimental group. If found any disprove the claim.
+
+    The **Variables** that Netflix uses is mainly SPS, (stream) starts per seconds.
+    If the SPS drops, the failures introduced are effective.
+
+    **Netflix's results**
+    > At the conclusion of an experiment, we either have more confidence in the system’s ability to maintain behavior in the presence of our variables, or a weakness has been uncovered and suggests a path for improvement.
+
+    Netflix is not the only company performing these experiments.
+    > We know from informal discussions with other Internet scale organizations that they are applying similar approaches.
+
+    The Chaos Engineering may be essential to ensure that a distributed system is operational.
+    For example, Google (I'm sure they already use it) is distributed across the globe. Their metric could be the request per seconds (RPS). They could introduce latency with backup and data center synchronization.
+    As the system must be always up.
+    The real case of backing up data/transferring load is already happening in production.
+    They already have sustained methods to apply their update, their new data center installation, etc.
