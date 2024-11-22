@@ -36,3 +36,16 @@
 
     This is not a software bug, but with sufficient system testing (stress test) it could have been discovered.
     Unfortunately the problem is appearing after months of usage, so in practice we can't test this much without having any idea of what we're testing.
+
+2. [CollectionUtilsTest.getFromMap() is flaky](https://issues.apache.org/jira/browse/COLLECTIONS-775) bug
+
+    This minor bug is local as it's the `CollectionUtils.get(expected, check)` that causes the problem.
+
+    The `CollectionUtilsTest.getFromMap()` is failing due to `CollectionUtils.get()` which uses a new Java Iterator each time it is called. It's possible that `get(0) != get(0)` and `get(0) = get(1)` in two subsequent calls to the "expected" HashMap.
+
+    The solution is a [simple fix](https://github.com/apache/commons-collections/pull/200):
+
+    > instead of adding `CollectionUtils.get(expected, 0)` and `CollectionUtils.get(expected, 1)` to a new HashMap (`found`) and compare the two maps, assert the 0 and 1 entries are either `zeroKey=zero` or `oneKey=one`.
+
+    The contributors fixed the test and added a new one for `ORDERED` maps like `LinkedHashMap`.
+    As it was a fix on only method test, an anti-regression test is not necessary.
