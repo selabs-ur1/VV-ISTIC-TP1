@@ -14,11 +14,34 @@
 1. 
 In October 2024, Mozilla has revealed that a critical security flaw impacting Firefox has come under active exploitation in the wild, known as [CVE-2024-9680](https://www.mozilla.org/en-US/security/advisories/mfsa2024-51/#CVE-2024-9680) . 
 
-It's an use-after-free bug in the animation component, which is basically a dangling pointer that lead to undefined behavior. Attackers can exploited this to execute code in your browser if they can figure out how to insert malicious code to that pointer memory address. 
-The bug has global impact on all firefox users, Mozilla had to immediately release a patch to fix it, but they have had reports of it being exploited in the wild. 
+It's an use-after-free bug in the animation component, which is basically a local bug: dangling pointer that lead to undefined behavior. Attackers can exploited this to execute code in your browser if they can figure out how to insert malicious code to that pointer memory address. Mozilla had to immediately release a patch to fix it, but they have had reports of it being exploited in the wild. 
 
 For the users afftected, we don't know that what happened to them as nothing catastrophic appeared, but it is possible that after code execution on their browser, personal data is compromised. For the company, it is certain that this is a hit to their userbase, because the market for browser is competitive right now.
 
 In my opinion, it would be hard to detect this bug even with proper testing as pointer-related bug are always like that. The code still function normaly with dangling pointer, the only way to prevent this is to follow good coding pratice: set pointer to null after freeing it
+
+2.
+[MultiSet.Entry::getCount() isn't 0 after removing the last element](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-709?filter=doneissues)
+
+This local bug is about number of entries in a MultiSet. Logically, after removing the last element from the set, its count should be 0, but somehow this is not the case here, when the set have only 1 element, entry.getCount() is 1, removing the last element and entry.getCount() is still 1. The fix is simply to manually set entry count to 0 after remove.
+
+The contributor carefully added a test case that cover exactly the bug. 
+```
+  @SuppressWarnings("unchecked")
+    public void testMultiSetEntrySetUpdatedToZero() {
+        if (!isAddSupported()) {
+            return;
+        }
+        final MultiSet<T> multiset = makeObject();
+        multiset.add((T) "A");
+        multiset.add((T) "A");
+        final MultiSet.Entry<T> entry = multiset.entrySet().iterator().next();
+        assertEquals(2, entry.getCount());
+        multiset.remove((T) "A");
+        assertEquals(1, entry.getCount());
+        multiset.remove((T) "A");
+        assertEquals(0, entry.getCount());
+    }
+```
 
 
