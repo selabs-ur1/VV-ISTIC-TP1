@@ -11,3 +11,14 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+1. 
+In October 2024, Mozilla has revealed that a critical security flaw impacting Firefox has come under active exploitation in the wild, known as [CVE-2024-9680](https://www.mozilla.org/en-US/security/advisories/mfsa2024-51/#CVE-2024-9680) . 
+
+It's an use-after-free bug in the animation component, which is basically a dangling pointer that lead to undefined behavior. Attackers can exploited this to execute code in your browser if they can figure out how to insert malicious code to that pointer memory address. 
+The bug has global impact on all firefox users, Mozilla had to immediately release a patch to fix it, but they have had reports of it being exploited in the wild. 
+
+For the users afftected, we don't know that what happened to them as nothing catastrophic appeared, but it is possible that after code execution on their browser, personal data is compromised. For the company, it is certain that this is a hit to their userbase, because the market for browser is competitive right now.
+
+In my opinion, it would be hard to detect this bug even with proper testing as pointer-related bug are always like that. The code still function normaly with dangling pointer, the only way to prevent this is to follow good coding pratice: set pointer to null after freeing it
+
+
