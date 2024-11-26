@@ -11,3 +11,21 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+2.  Nous avons décidé d'étudier le bug https://issues.apache.org/jira/browse/COLLECTIONS-709.
+    Ce bug est local car il impacte uniquement la gestion des entrées dans les implémentations de MultiSet.
+
+    Problème : Chaque élément d'un MultiSet est associé à un compteur. Le problème est que lorsque toutes les occurences d'un élément du MultiSet sont supprimés, le compteur de l'objet MultiSet.Entry n'est pas réinitialisé à zéro.
+
+    Solution : La solution apportée est simple, il s'agissait juste d'un oubli de mettre la valeur du compteur dans l'entrée associée à zéro dans la méthode remove.
+
+    Tests : Les contributeurs ont bien ajouté un test pour vérifier que le compteur est bien réinitialisé à zéro lorsque toutes les occurences d'un élément sont supprimées. Il vérifie bien dans le cas ou les occurences sont supprimées une par une.
+
+4.  Les avantages principaux d'avoir une spécification formelle pour WebAssembly sont les suivants :
+    - Permet d'éviter les comportements imprévus car toutes les instructions sont définies de manière précise et respectent les mêmes règles.
+    - Permet d'avoir une sécurité accrue car chaque règle de sécurité sont respectées à chaque fois.
+    - Permet d'accélérer le processus de vérification car il est possible de valider le code de façon linéaire sans avoir à retourner en arrière.
+    - Permet de faciliter l'ajout de nouvelles fonctionnalités de manière sécurisée et plus efficace.
+    
+    Avoir une spécification formelle ne signifie pas que les implémentations de WebAssembly ne doivent pas être testées. En effet, les tests permettent de vérifier que l'implémentation respecte bien la spécification formelle et permettent également de vérifier que l'implémentation est correcte et qu'elle ne contient pas de bugs. Les tests permettent également d'avoir un apperçu de la performance ainsi que de vérifier son comportement dans différents environnements ou matériels.
+
