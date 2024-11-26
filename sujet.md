@@ -14,24 +14,22 @@
 
 ## Answers
 
-## Question 1 : 
+## Question 1 :
 
-Le bug récemment découvert que nous avons choisi est un bug de l'application "WhatsApp for Android", plus précisément la fonctionnalité d'ajout de filtres sur des photos.
-Ce bug provoquait un risque de "out-of-bounds read/write", car l'application ne réalisait pas les bons contrôles lors de l'application d'un filtre à une image.
-Un chercheur de l'entreprise "Check Point" a reverse engineerer la librarie  **libwhatsapp.so** et découvert qu'une méthode `applyFilterIntoBuffer()` s'occupant d'appliquer les filtres, faisait l'hypothèse que l'image à traiter et le filtre à appliquer étaient de la même taille, et avaient le même format RGBA. (Sachant que chaque pixel au format RGBA est représenté par 4 bytes.)
-Cette fonction possédait donc un buffer de la taille de l'image sélectionnée. Si cette même image était modifiée pour n'avoir qu'un seul byte par pixel. La fonction tentait de lire et copier l'équivalent de 4 fois le buffer initial. Provoquant ainsi un "out-of-bounds read/write".
-
+Nous avons choisi un bug de l'application "WhatsApp for Android", concernant l'ajout de filtres sur des photos.
+Un chercheur de l'entreprise "Check Point" a reverse engineerer la librarie  **libwhatsapp.so** et découvert que la méthode `applyFilterIntoBuffer()` 
+s'occupant d'appliquer des filtres à une image chargée dans un buffer, faisait implicitement l'hypothèse que la taille et le format (RGBA) de l'image 
+et du filtre était les mêmes. Ce bug introduit une faille de type "out-of-bounds read/write", rendant possible avec une image avec un format 
+différent (en l'occurence ici un byte par pixel au lieu de 4) de faire copier dans le buffer l'équivalent de 4 fois sa taille de donnée. 
 Ce bug aurait pu être évité en réalisant les bons scénarios de tests. Cette méthode faisant l'hypothèse que l'image était forcément au bon format. Un ou plusieurs cas de tests réalisés avec des images au mauvais format auraient permis de détecter le problème.
-
 Avec de meilleures spécifications, le bug aurait également pu être évité grâce à de la programmation défensive, permettant d'assurer que l'hypothèse que l'image était au bon format. Ce qui a finalement été ajouté car "WhatsApp" a indiqué dans son communiqué avoir rajouté deux nouveaux checks dans cette même méthode.
 
 
-
-## Question 2 : 
+## Question 2 :
 
 Nous avons sélectionné [ce ticket](https://issues.apache.org/jira/browse/COLLECTIONS-796) qui mentionne un bug dans la méthode statique createSetBasedOnList appartenant à la class SetUniqueList. Le comportement obtenu après exécution de la méthode n'est pas celui attendu d'après la description, le set d'élément retourné ne contenant pas les valeurs de la liste passée en paramètre. Ce bug local provenait d'une ligne supprimée lors d'un commit précédent, ligne ajoutant tout les élements de la liste passée en paramètre dans le set retourné. La solution fut de rajouter cette ligne, et de fournir une méthode de test pour tester cette méthode statique (on notera au passage qu'il n'y avait pas de cas de test pour cette méthode). On peut aussi noter la résolution d'une typo dans la même [PR](https://github.com/apache/commons-collections/pull/255).
 
-## Question 3 : 
+## Question 3 :
 
 Netflix est une entreprise qui fournit des services à travers Internet. Afin d'accroître la valeur de leurs services, les ingénieurs travaillant à Netflix produisent tous les jours du nouveau code et des modifications.
 
@@ -46,8 +44,9 @@ Netflix va alors au travers de trois types d'expérience appliquer une approche 
 - Et la dernière **"Failure Injection Testing (FIT)"** vise à provoquer des échecs dans les requêtes entre services pour tester la dégradation contrôlée du système.
 
 
-Pour réaliser à bien ces expériences, il faut tout d'abord définir un **"steady state"**, un indicateur permettant de s'assurer que le système fonctionne correctement. En se demandant si le système marche correctement et si les utilisateurs se plaignent. 
-Dans le cas de Netflix, ils ont choisi le "Stream per second" (SPS) représentant le nombre d'utilisateurs qui lancent un film ou une série en streaming par seconde.
+Pour réaliser à bien ces expériences, il faut tout d'abord définir un **"steady state"**, un indicateur permettant de s'assurer que le système fonctionne correctement.
+Dans le cas de Netflix, il a été choisit le "Stream per second" (SPS) représentant le nombre d'utilisateurs qui lancent un film ou une série en 
+streaming par seconde.
 
 Ainsi on se concentre seulement sur l'expérience utilisateurs. Et dans le cas où un service non critique échoue, il se peut qu'il n'ait pas nécessairement d'impact sur la disponibilité globale du système, comme le service "Bookmark" de Netflix.
 
@@ -57,14 +56,17 @@ Enfin, pour s'assurer de la pertinence des résultats obtenus par ces tests. Net
 Par exemple, des tests "Chaos monkey" sont réalisés continuellement tandis que les tests "Chaos Kong" sont réalisés moins fréquemment (ex : une fois par mois).
 
 Bien que Netflix soit l'une des seules entreprises ayant documenté leur application du Chaos engineering, d'autres grandes entreprises du secteur appliquent les mêmes méthodes.
-On pourrait, par exemple, imaginer qu'une entreprise comme Amazon applique les mêmes méthodes. En utilisant le nombre d'achats effectués par seconde comme "steady state".
+On pourrait, par exemple, pour entreprise comme Amazon, imaginer une application des mêmes méthodes en utilisant le nombre d'achats effectués par 
+seconde en guise de "steady state".
 
-## Question 4 : 
+## Question 4 :
 
 Du fait de la construction du language il est possible d'effectué un certain nombre de vérifications statiquement, notamment sur la mémoire "memory accesses in WebAssembly can be guaranteed safe with a single dynamic bounds check." page 12 de l'article, où encore l'absence prouvée (entendre par là mathématiquement) de comportements inattendus lors de l'exécution de chaque instructions. Par exemple l'instruction i32.add, d'après la spécification garantit en résultat la somme des deux nombres valide, si ceux ci sont valides. Si le résultat dépasse un entier 32bit, alors la spécification indique que le résultat attendu sera précis et prévisible. Un autre exemple serait celui de la division par 0. La validation du code reçu est également simplifiée, de par la grammaire du language. Celà dit apparement (cf section 6) trois comportements d'implémentations peuvent être considérée comme toujours non déterministe. Concernant les différentes implémentations du support du language WebAssembly dans les différents navigateurs existant, il est bien entendu évident qu'il faut les tester, car bien que la spécification du language est prouvée, l'implémentation elle ne l'est pas.
 
-## Question 5 : 
+## Question 5 :
 
 Le papier relate la formalisation en utilisant Isabelle de la sémantique et des types du language WebAssembly, ainsi que la preuve de la robustesse de ces types. Il est mentionné que, afin de compléter cette preuve, il a fallut corriger certains aspect de la spécification de WebAssembly. Par exemple, la façon dont le language WebAssembly opérait avec son système d'exécution n'était pas formellement spécifié, et la formalisation par les auteurs de ce papier de ce système (avec Isabelle) a mené à la découverte d'un manque de robustesse dans le système de type de WebAssembly. Cependant celà n'empêche pas l'utilisation de test car bien que ce qui est prouvé mathématiquement est vrai rien n'empêche une erreur de postulat / d'assertion par exemple. Également en cours Benoît Combemale nous a parlé d'un cas similaire (je ne sais plus si il s'agissait de ce papier) ou des tests ont mis en évidences des problèmes sur un programme qui avait justement été prouvé auparavant avec Isabelle. L'article explique ensuite plus en détail du checker de type qu'ils ont définit à l'aide d'Isabelle, puis codé et compilé en exécutable, ainsi que l'interpreter qu'ils ont aussi conçu.
+
+
 
 
