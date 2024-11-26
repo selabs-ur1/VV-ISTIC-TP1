@@ -72,3 +72,21 @@
 
    D'autres entreprises telles que Google, Amazon, Microsoft ou Facebook pratiquent aussi maintenant le Chaos
    Engineering.
+
+
+5. L'avantage principal de la spécification mécanisée avec le langage de preuve Isabelle est qu'elle permet d'avoir des
+   preuves de bonne spécification contrairement à la spécification formelle originale. Cette spécification mécanisée à
+   parmi de détecter des erreurs dans la spécification WebAssembly. Par exemple la propagation incorrect d'exception ou
+   des règles insuffisantes de typage ont été corrigées. La spécification mécanisée a permis d'identifier des
+   incohérences et de valider les implémentations.
+
+   L'auteur a vérifié la spécification mécanisée de WebAssembly avec l'utilisation de ce qui est appelé dans l'article
+   le Fuzzing. C'est une méthode qui consiste à effectuer des tests aléatoires sur l'interpréteur et sur des moteurs
+   commerciaux de WebAssembly puis de les comparer.
+
+   La spécification mécanisée ne supprime pas complètement le besoin de tests. Bien qu'elle améliore considérablement la
+   confiance dans la solidité théorique de WebAssembly et des outils associés, les tests restent nécessaires. Il faut en
+   effet tester les cas spécifiques comme l'intégration avec l'environnement hôte
+
+
+
