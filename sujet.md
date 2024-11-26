@@ -13,10 +13,10 @@
 ## Answers
 
 1.  Google a récemment publié un article à propos de l'utilisation de l'IA dans la recherche de vulnérabilités.
-En utilisant cette technique ils ont pu identifier 26 bugs, dont un concernant Open SSL, une librairie de cryptographie très largement utilisée dans le monde.
+En utilisant cette technique, ils ont pu identifier 26 bugs, dont un concernant Open SSL, une librairie de cryptographie très largement utilisée dans le monde.
 Lors de l'utilisation de fonctions de son API permettant la "manipulation de courbes elliptiques" parfois utilisées en cryptographie, et en renseignant de paramètres qui ne sont pas fiables, on peut lire ou écrire hors des limites de la mémoire.
 Cela cause un crash et peut aussi théoriquement être utilisé pour injecter du code malveillant.
-Malgré tout ce bug reste mineur et local, car ces fonctions mathématiques sont très peu utilisée, et donc concernent une faible des utilisateurs d'Open SSL.
+Malgré tout, ce bug reste mineur et local, car ces fonctions mathématiques sont très peu utilisées, et donc concernent une faible des utilisateurs d'Open SSL.
 De plus, les principaux protocoles de cryptographie n'autorisent pas l'utilisation de valeurs non fiables pour ces fonctions, et empêchent que des valeurs problématiques soient utilisées avec Open SSL.
 Sur une librairie aussi largement utilisée que Open SSL il est difficile de dire si un meilleur scénario de testing aurait pu le détecter plus tôt.
 Je pense néanmoins que des tests de son API en mode boîte noire en injectant des valeurs hors du cadre d'utilisation prévu auraient peut-être pu le détecter.
@@ -35,38 +35,38 @@ Lien vers le ticket Jira du bug[https://issues.apache.org/jira/projects/COLLECTI
 Pour mettre en place cette technique de test, Netflix utilise ce qu'ils appellent le "Chaos Monkey", 
 qui durant les heures de travail des ingénieurs choisit aléatoirement un serveur et l'arrête.
 Ils mènent aussi des exercices avec le "Chaos Kong" qui lui simule carrément l'arrêt de régions entières du cloud Amazon.
-Le design de ces expériences nécessitent l'application de quatre principes :
- - Construire une hyptohèse autour d'un état stable du système
- - Faire varier les évènements
+Le design de ces expériences nécessite l'application de quatre principes :
+ - Construire une hypothèse autour d'un état stable du système
+ - Faire varier les événements
  - Conduire les expériences en production
  - Automatiser ces expériences pour les lancer continuellement
 
 Pour mesurer ces expériences Netflix utilise une unité nommée "SPS", pour "starts (= stream) per second".
 Elle correspond au nombre d'utilisateurs qui lancent un flux à chaque seconde.
 Pour les expériences de Chaos Engineering, ils n'utilisent pas de métriques plus précises comme la charge CPU ou le temps de réponse en base de données.
-En effet le but ici est de tester directement l'interaction entre les utilisateurs et le système.
-Pour eux, tant que le service est opérationnel et même si il est dégradé, la mission est remplie.
-A chaque exercice de Chaos Engineering, deux résultats sont possibles: soit le système a tenu et a prouvé sa résilience, soit une faiblesse a été découverte et suffère une piste d'amélioration.
+En effet, le but ici est de tester directement l'interaction entre les utilisateurs et le système.
+Pour eux, tant que le service est opérationnel, et même si il est dégradé, la mission est remplie.
+A chaque exercice de Chaos Engineering, deux résultats sont possible: soit le système a tenu et a prouvé sa résilience, soit une faiblesse a été découverte et suggère une piste d'amélioration.
 Netflix ne sont pas les seuls à utiliser le Chaos Engineering, ils ont remarqué l'utilisation de principes de test de systèmes similaires chez Google, Amazon, Microsoft et Facebook.
 
 4.  Les avantages principaux d'une spécification formelle en Web Assembly sont :
- - Précision et clarté : Fournir aux développeurs une documentation claire et précise.
- - Consistance dans l'implémentation : Permettre à des implémentations complètement indépendantes de se comporter de la même manière.
- - Exactitude : Ses propriétés peuvent être démontrées mathématiquement.
- - Sécurité : Il est facile de détecter des erreurs (mémoire, contraintes, vulnérabilités).
- - Portabilité : On peut faire du WebAssembly facilement sur une très grande variété d'environnements.
+ - Précision et clarté : fournir aux développeurs une documentation claire et précise.
+ - Consistance dans l'implémentation : permettre à des implémentations complètement indépendantes de se comporter de la même manière.
+ - Exactitude : ses propriétés peuvent être démontrées mathématiquement.
+ - Sécurité : il est facile de détecter des erreurs (mémoire, contraintes, vulnérabilités).
+ - Portabilité : on peut faire du WebAssembly facilement sur une très grande variété d'environnements.
 
 Malgré ces points forts, je ne vois pas le rapport entre les avantages d'une spécification formelle et le fait de ne plus avoir besoin de tests dans les implémentations de cette spécification.
-Les bugs sont des phénomènes émergents qui se manifestent dans l'interactions des règles et des composants entre eux.
+Les bugs sont des phénomènes émergents qui se manifestent dans l'interaction des règles et des composants entre eux.
 Plus on produit quelque chose de complexe et plus on a de chances que des interactions non prévues apparaissent entre les composants.
-Donc non, il faut toujours tester pour pouvoir assurer du mieux possible que les implémentations fonctionnent de la manière attendue.
+Donc, non, il faut toujours tester pour pouvoir assurer du mieux possible que les implémentations fonctionnent de la manière attendue.
 
-5.  D'après l'auteur, les deux principaux avantages de la spécification mechanisée sont :
+5.  D'après l'auteur, les deux principaux avantages de la spécification mécanisée sont :
  - Avoir une spécification propice à la conduction de preuves.
  - Avoir un interpréteur capable d'optimisation.
 
-Il conclut son article en expliquant cette spécification est faite à la main, diffère beaucoup de la spécification originelle, ne contient aucun support d'interaction avec son environnement, et ne n'offre aucune preuve de respecter la propriété de correction du WebAssembly classique.
+Il conclut son article en expliquant cette spécification est faite à la main, diffère beaucoup de la spécification originelle, ne contient aucun support d'interaction avec son environnement, et n'offre aucune preuve de respecter la propriété de correction du WebAssembly classique.
 Il explique qu'a leur connaissance, Isabelle représente le premier travail de méchanisation du WebAssembly.
-Ici on est dans un nouveau paradigme, où on fait de la programmation orientée par la preuve.
+Ici, on est dans un nouveau paradigme, où on fait de la programmation orientée par la preuve.
 On peut donc techniquement prouver au sens mathématique qu'une implémentation fait ce qu'elle doit faire, et ne fais pas ce qu'elle ne doit pas faire.
-Est-ce que cela suffit à dire qu'on peut se passer de tests ? J'avoue qu'il est très tentant de dire oui, mais en vérité je ne sais pas.
+Est-ce que cela suffit à dire qu'on peut se passer de tests ? J'avoue qu'il est très tentant de dire oui, mais en vérité, je ne sais pas.
