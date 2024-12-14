@@ -11,3 +11,52 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+# Question 1
+
+The Therac-25 was a radiation therapy machine used in the 1980s to treat cancer patients. The incident revolved around a global software bug caused by a race condition. This bug affected how the machine configured its radiation modes, leading to incorrect settings. The failure manifested when the machine administered radiation doses over 100 times the acceptable level for adults, resulting in severe injuries and deaths.
+The issue was exacerbated because the Therac-25 relied entirely on software control to ensure safety, unlike its predecessor, the Therac-20, which included hardware safeguards. The lack of hardware interlocks meant that there was no backup safety mechanism to prevent such failures.
+
+Clients/Consumers : Patients experienced life-threatening radiation overdoses, causing devastating health consequences, including severe burns and death.
+
+For the Company: The manufacturer faced lawsuits, financial losses, and irreparable damage to its reputation. The incidents highlighted poor software engineering practices and inadequate testing for safety-critical systems.
+
+Testing right Scenario : ??????????????????
+
+# Question 2 
+
+* Commons 734 [CollectionsCOLLECTIONS-734](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-734?filter=doneissues)
+* Git [Pull-Request](https://github.com/apache/commons-collections/pull/115/commits/37a0381f43e04ed50ef32c26e1bb5752011e56fc)
+
+### Explain the bug and the solution.
+Le bug est que nous marquons l'élément comme supprimé alors que le remove est appellé après. 
+### Classify the bug as local or global. 
+???
+### Did the contributors of the project add new tests to ensure that the bug is detected if it reappears in the future?
+Le contributeur à bien entendu rajouter un cas de test ```testEntrySet() ```, ce test vérifie qu'une liste comportant 3 élements, une fois le dernier élément supprimé alors la liste fait bien une taille de 3 et que les 2 premiers éléments ont bien la bonne valeur etc.
+
+# Question 3
+## explain what are the concrete experiments they perform   
+Chaos Engineering means that they inject voluntarily errors in their system to see his behavior or to put the organisation in a turbulent condition. For example, Netflix shutdown one of their servers or overload it to see if everything is still working.
+## what are the requirements for these experiments,
+A ‘steady state’ is a state when everything is working smouthly. When we are in this state, we can perform Chaos Engineering to test our software. Hypothese that this steady state will continue in both the control group and the experimental group. 
+## what are the variables they observe and what are the main results they obtained.
+
+Variables that reflect real world events like servers that crash, hard drives that malfunction, network connections that are severed. 
+##  Is Netflix the only company performing these experiments? 
+Companies like Google, Facebook, Apple, Amazon or LinkedIn are also performing Chaos Engineering. 
+
+## Speculate how these experiments could be carried in other organizations in terms of the kind of experiment that could be performed and the system variables to observe during the experiments.
+
+This experiments needs to be perform for huge companies/organisations. Their product needs to be a service because we can see the  
+
+# Question 4
+## what are the main advantages of having a formal specification for WebAssembly
+WebAssembly est compact, rapide, sécurisé, et indépendant du langage et de la plateforme. IL repose sur une spécification formelle dès le départ, ce qui garantit une conception claire, une exécution sécurisée et des performances optimales. Ses principaux avantages sont : clarté, interopérabilité, Sécurité renforcée, Facilité de validation.
+
+## In your opinion, does this mean that WebAssembly implementations should not be tested?
+Même si c'est formelle, il faut tester les implémentations. La formalisation réduit les erreurs conceptuelles, mais des erreurs peuvent survenir dans la mise en œuvre réelle, en particulier dans les navigateurs ou environnements spécifiques. 
+Tester assure que le code fonctionne correctement dans toutes les conditions et que la performance est optimale peut importe l'utilisation.
+
+# Question 5
+Selon l'article, les utilisateurs ont toujours besoin de tester leur implémentations pour s'assurer qu'elles sont correctes. Cependant, il n'est plus nécessaire de tester les spécifications.
