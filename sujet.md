@@ -11,3 +11,24 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1.
+[source](https://www.bleepingcomputer.com/news/software/citrix-sophos-software-impacted-by-2024-leap-year-bugs/)
+
+The Citrix leap year bug on February 29, 2024, caused their video redirection service on all virtual delivery agent machines to fail after restarts, disrupting video streaming in virtual desktop environments. Users had to perform manual workarounds like resetting system dates, which was impractical for large-scale setups. Proper testing could have indeed prevented the disruption as leap year is a common thing to take into account when working with a date system. It was a global bug. It has impacted both users’ productivity and Citrix’s reputation​.
+
+2.
+[Bug](https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-709?filter=doneissues&orderby=cf%5B10010%5D+ASC%2C+cf%5B12310200%5D+ASC%2C+updated+DESC)
+
+Removing the final element(s) in a MultiSet doesn't set the count on a MultiSet.Entry to zero despite it not having elements anymore.to fix this, the one issuing the request proposed doing a special case for when the remove method of MultiSet is called to be able to handle the removal of the last element. they also added a proper test in the appropriate class. It is a local bug because it only affected a specific case of when remove was called, remove still worked as intended with other entry.getCount() values.
+
+3.
+Netflix's Chaos Engineering involves testing their systems in production by simulating failures, like failing requests between services or terminate virtual machine instances, to ensure reliability. They monitor variables like system uptime, latency, and error rates. The technique helps identify weaknesses and improve system resilience. Other companies like Amazon,Facebook,Microsoft and even Google also use similar approaches. Other organizations could focus on testing databases or authentication systems with that system, observing variables like response time and service availability.
+
+4.
+A formal specification defines the behavior of the language and its runtime environment precisely. A user with the full knowledge of the specification should know exactly how a piece of code would behave if executed. A formal specification also offers the user a full knowledge of certain elements that you wouldn't of normally like memory management or exception handling for example. It also facilitate the creation of tests. Even with a formal specification WebAssembly absolutely still needs to be tested, there is no reason it shouldn't, in fact formal specification encourages it.
+
+5.
+In tandem with the formal specification, the mechanized specification offers precision and an automated verification that can produce a fully mechanised proof of properties which hasn't been done before this. Mechanized specification helped refine the original formal specification by identifying inconsistencies in it. Artifacts derived from this mechanized specification include proofs of properties and verification conditions for the language's implementation. The author verified the specification by formal proofs within Isabelle. This doesn't mean that we shouldn't test anymore, there is always the possibility of missing something, also Isabelle doesn't help us to test issues like performance or cross-platform behavior.
+ 
+
