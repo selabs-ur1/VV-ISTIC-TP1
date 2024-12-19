@@ -66,30 +66,36 @@ https://issues.apache.org/jira/projects/COLLECTIONS/issues/COLLECTIONS-850?filte
 
 4.	WebAssembly
 	
-	expliquez quels sont les principaux avantages d'avoir une spécification formelle pour WebAssembly. 
-		- Portabilité et Cohérence: Une spécification garantit que WebAssembly se comporte de manière identique sur toutes les plateformes.
-		- Sécurité Renforcée: il minimise les risques de comportements imprévus ou de vulnérabilités.
-		- Facilité de Vérification et de Validation: Les développeurs peuvent utiliser des outils de preuve pour garantir que leur implémentation respecte les attentes définies dans la spécification.
+Expliquez quels sont les principaux avantages d'avoir une spécification formelle pour WebAssembly: 
+	
+- Portabilité et Cohérence: Une spécification garantit que WebAssembly se comporte de manière identique sur toutes les plateformes.
+- Sécurité Renforcée: il minimise les risques de comportements imprévus ou de vulnérabilités.
+- Facilité de Vérification et de Validation: Les développeurs peuvent utiliser des outils de preuve pour garantir que leur implémentation respecte les attentes définies dans la spécification.
 
 	
 		
-	cela signifie-t-il que les implémentations WebAssembly ne doivent pas être testées ?
-		L'utilisation de WebAssembly ne remplace pas les tests. Ils est toujours possible de voir appaître des implementations eroné qui sont source d'erreur. L'environnement web est aussi en perpetuel evolution et demande à être en permanence surveiller pour verifier que notre code fonctionne toujours. 
-		Sa potentiel robustesse et sa fiabilité, ne permet donc pas de passer outre les tests, qui restent indispensables pour garantir la robustesse dans des scénarios réels.
+cela signifie-t-il que les implémentations WebAssembly ne doivent pas être testées ?
+
+L'utilisation de WebAssembly ne remplace pas les tests. Ils est toujours possible de voir appaître des implementations eroné qui sont source d'erreur. L'environnement web est aussi en perpetuel evolution et demande à être en permanence surveiller pour verifier que notre code fonctionne toujours. 
+Sa potentiel robustesse et sa fiabilité, ne permet donc pas de passer outre les tests, qui restent indispensables pour garantir la robustesse dans des scénarios réels.
 		
 5.	WebAssembly Bis
 
-	Selon l'auteur de ce deuxième article, quels sont les principaux avantages de la spécification mécanisée ? 
-		- Précision et Fiabilité
-	A-t-elle contribué à améliorer la spécification formelle originale du langage ? 
-		Oui ses travaux ont permis d'améliorer la spécification formelle.
-	Quels autres artefacts ont été dérivés de cette spécification mécanisée ? 
-		Un interpréteur, permettant d'exécuter des programmes WebAssembly avec des garanties formelles sur leur comportement. Et un vérificateur, prouvant la conformité des programmes avec le système de types de WebAssembly. Ces artefacts sont intégrés avec le code de référence officiel pour tester leur compatibilité et fiabilité​.
+Selon l'auteur de ce deuxième article, quels sont les principaux avantages de la spécification mécanisée ? 
+
+- Précision et Fiabilité
+A-t-elle contribué à améliorer la spécification formelle originale du langage ? 
+Oui ses travaux ont permis d'améliorer la spécification formelle.
+Quels autres artefacts ont été dérivés de cette spécification mécanisée ? 
+Un interpréteur, permettant d'exécuter des programmes WebAssembly avec des garanties formelles sur leur comportement. Et un vérificateur, prouvant la conformité des programmes avec le système de types de WebAssembly. Ces artefacts sont intégrés avec le code de référence officiel pour tester leur compatibilité et fiabilité​.
 		
-	Comment l'auteur a-t-il vérifié la spécification ? 
-		La spécification mécanisée a été testée en utilisant la suite de tests officielle de conformité de WebAssembly et des tests différentiels contre plusieurs moteurs commerciaux, garantissant sa robustesse et sa précision
-	Cette nouvelle spécification supprime-t-elle le besoin de tests ?
-		Non, des erreurs peuvent toujours apparître, tel que des erreurs humaines.
+Comment l'auteur a-t-il vérifié la spécification ? 
+
+La spécification mécanisée a été testée en utilisant la suite de tests officielle de conformité de WebAssembly et des tests différentiels contre plusieurs moteurs commerciaux, garantissant sa robustesse et sa précision
+	
+Cette nouvelle spécification supprime-t-elle le besoin de tests ?
+
+Non, des erreurs peuvent toujours apparaître, tel que des erreurs humaines.
 		
 		
 		
